@@ -7,7 +7,10 @@
  */
 
 require_once 'SomeClass.php';
+require_once 'samefile/SomeClass.php';
 
-$obj = new SomeClass();
-$obj->__set('setter', 'setValue');
-echo $obj->__get('setter');
+$obj = new Food\Sweet\SomeClass();
+echo $obj->__toString();
+
+$obj2 = new testfile\Food\Test\SomeClass();
+echo $obj2->__toString();

@@ -6,7 +6,7 @@
  * Time: 12:52
  */
 
-namespace Food\Sweet;
+namespace testfile\Food\Test;
 
 class SomeClass
 {
@@ -66,7 +66,7 @@ class SomeClass
     public function __toString()
     {
         // TODO: Implement __toString() method.
-        return 'This Class is '.__CLASS__;
+        return 'This Class is Copy'.__CLASS__;
     }
 
     public function __invoke()
