@@ -6,11 +6,14 @@
  * Time: 12:56
  */
 
-require_once 'SomeClass.php';
-require_once 'samefile/SomeClass.php';
 
-$obj = new Food\Sweet\SomeClass();
-echo $obj->__toString();
+//requireはディレクトリで指定したファイルを読み込む
+require_once 'hello.php';
+require_once 'folder/copy.php';
 
-$obj2 = new testfile\Food\Test\SomeClass();
-echo $obj2->__toString();
+//同じメソッド名があるので衝突して呼べない
+$obj = new original\hello();
+$obj->hello();
+
+$obj2 = new copy\copy();
+$obj2->hello();
