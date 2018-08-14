@@ -11,7 +11,7 @@
 require_once 'hello.php';
 require_once 'folder/copy.php';
 
-//同じメソッド名があるので衝突して呼べない
+//同じメソッド名があるので､namespaceを指定しないと衝突して呼べない
 $obj = new original\hello();
 $obj->hello();
 
