@@ -88,4 +88,40 @@ class Request
     {
         return $_SERVER['REQUEST_URI'];
     }
+
+    /**
+     * $script_name, $request_uriの値を用いてベースURLを取得する
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        $script_name = $_SERVER['SCRIPT_NAME'];
+        $request_uri = $this->getRequestUri();
+
+        if (strpos($request_uri, $script_name) === 0) {
+            return $script_name;
+        } else if (strpos($request_uri, dirname($script_name))) {
+            return rtrim(dirname($script_name), '/');
+        }
+        return '';
+    }
+
+    /**
+     * PATH_INFOを取得する
+     * REQUEST_URIからベースURLを除く
+     * @return string
+     */
+    public function getPathInfo()
+    {
+        $base_url = $this->getBaseUrl();
+        $request_uri = $this->getRequestUri();
+
+        if (($pos = strpos($request_uri, '?')) !== false) {
+            $request_uri = substr($request_uri, 0, $pos);
+        }
+
+        $path_info = (string)substr($request_uri, strlen($base_url));
+
+        return $path_info;
+    }
 }
