@@ -7,7 +7,7 @@
  */
 
 /**
- * ユーザのリクエスト情報を制御するクラス
+ * ユーザのリクエスト情報を制御するク
  * HTTPメソッドの判定や$_GET,$_POSTの値を取得する
  * URLに関する情報を制御する
  */
@@ -17,7 +17,7 @@ class Request
      * HTTPメソッドがPOSTか判定する
      * @return bool
      */
-    public function isPost()
+    public function isPost(): bool
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return true;
@@ -30,7 +30,7 @@ class Request
      * $_GET変数から値を取得する
      * @param string $name
      * @param null $default
-     * @return null
+     * @return mixed
      */
     public function getGet(string $name, $default = null)
     {
@@ -48,8 +48,8 @@ class Request
      */
     public function getPost(string $name, $default = null)
     {
-        if (isset($_GET[$name])) {
-            return $_GET[$name];
+        if (isset($_POST[$name])) {
+            return $_POST[$name];
         }
         return $default;
     }
@@ -58,7 +58,7 @@ class Request
      * サーバのホスト名を取得する
      * @return mixed
      */
-    public function getHost()
+    public function getHost(): string
     {
         if (!empty($_SERVER['HTTP_HOST'])) {
             return $_SERVER['HTTP_HOST'];
@@ -71,7 +71,7 @@ class Request
      * HTTPSでアクセスされた場合、$_SERVER['HTTPS']に'on'という文字が含まれる
      * @return bool
      */
-    public function isSsl()
+    public function isSsl(): bool
     {
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
             return true;
@@ -84,7 +84,7 @@ class Request
      * URLのホスト部分以降の値を返す
      * @return mixed
      */
-    public function getRequestUri()
+    public function getRequestUri(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
@@ -93,7 +93,7 @@ class Request
      * $script_name, $request_uriの値を用いてベースURLを取得する
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         $script_name = $_SERVER['SCRIPT_NAME'];
         $request_uri = $this->getRequestUri();
@@ -111,7 +111,7 @@ class Request
      * REQUEST_URIからベースURLを除く
      * @return string
      */
-    public function getPathInfo()
+    public function getPathInfo(): string
     {
         $base_url = $this->getBaseUrl();
         $request_uri = $this->getRequestUri();

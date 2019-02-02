@@ -6,6 +6,8 @@
  * Time: 11:13
  */
 
-//アプリケーションを実行する処理を書く
-
+// フロントコントローラ
 require '../bootstrap.php';
+
+$request = new Request();
+echo $request->getRequestUri();
