@@ -36,9 +36,10 @@ class Router
         $routes = [];
 
         foreach ($definitions as $url => $params) {
+            //URLをスラッシュごとに分割する
             $tokens = explode('/', ltrim($url, '/'));
             foreach ($tokens as $i => $token) {
-                if (strpos($tokens, ':')) {
+                if (strpos($token, ':')) {
                     $name = substr($token, 1);
                     $token = "?P<{$name}>[^/]+";
                 }
@@ -52,10 +53,22 @@ class Router
         return $routes;
     }
 
+    /**
+     * @param $path_info
+     * @return array|bool
+     */
     public function resolve($path_info)
     {
-        if (substr($path_info, 0, 1) !== '!') {
+        if (substr($path_info, 0, 1) !== '/') {
             $path_info = "/{$path_info}";
         }
+        
+        foreach ($this->routes as $pattern => $params) {
+            if (preg_match("#^{$pattern}$#", $path_info, $matches)) {
+                return array_merge($params, $matches);
+            }
+        }
+
+        return false;
     }
 }
