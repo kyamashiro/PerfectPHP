@@ -36,10 +36,10 @@ class Session
 
     /**
      * @param string $name
-     * @param null $default
+     * @param array $default
      * @return null
      */
-    public function get(string $name, $default = null)
+    public function get(string $name, array $default = null)
     {
         if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
