@@ -21,7 +21,7 @@ class ClassLoader
      * オートローダクラスを登録する処理
      * @throws Exception
      */
-    public function register()
+    public function register(): void
     {
         spl_autoload_register([$this, 'loadClass']);
     }
@@ -30,13 +30,14 @@ class ClassLoader
      * coreディレクトリ､modelディレクトリからクラスファイルを読み込む
      * @param $dir
      */
-    public function registerDir($dir)
+    public function registerDir($dir): void
     {
         $this->dirs[] = $dir;
     }
 
     /**
      * オートロードが実行された際にクラスファイルを読み込む処理
+     * $dirsプロパティに設定されたディレクトリから「クラス名.php」を探し出し、見つかった場合、requireで読み込む。
      * @param $class
      */
     public function loadClass($class)
