@@ -31,7 +31,7 @@ class Router
      * @param $definitions
      * @return array
      */
-    public function compileRoutes($definitions)
+    public function compileRoutes($definitions): array
     {
         $routes = [];
 
@@ -45,11 +45,9 @@ class Router
                 }
                 $tokens[$i] = $token;
             }
+            $pattern = '/' . implode('/', $tokens);
+            $routes[$pattern] = $params;
         }
-
-        $pattern = '/' . implode('/', $tokens);
-        $routes[$pattern] = $params;
-
         return $routes;
     }
 
@@ -62,7 +60,7 @@ class Router
         if (substr($path_info, 0, 1) !== '/') {
             $path_info = "/{$path_info}";
         }
-        
+
         foreach ($this->routes as $pattern => $params) {
             if (preg_match("#^{$pattern}$#", $path_info, $matches)) {
                 return array_merge($params, $matches);

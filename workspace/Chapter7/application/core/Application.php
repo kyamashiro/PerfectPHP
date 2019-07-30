@@ -6,6 +6,9 @@
  * Time: 11:01
  */
 
+/**
+ * コアクラス
+ */
 abstract class Application
 {
     /**
@@ -33,6 +36,9 @@ abstract class Application
      */
     protected $router;
 
+    /**
+     * @var array
+     */
     protected $login_action = [];
 
     /**
@@ -61,6 +67,9 @@ abstract class Application
         }
     }
 
+    /**
+     *
+     */
     protected function initialize(): void
     {
         $this->request = new Request();
@@ -70,6 +79,9 @@ abstract class Application
         $this->router = new Router($this->registerRoutes());
     }
 
+    /**
+     *
+     */
     protected function configure()
     {
 
@@ -158,7 +170,7 @@ abstract class Application
     }
 
     /**
-     *  コントローラ名とアクション名を取得し､アクションを実行しレスポンスを返す
+     *  ルーティングパラメータを取得、コントローラ名とアクション名を特定し、アクションを実行してレスポンスを返す
      */
     public function run(): void
     {
@@ -222,6 +234,9 @@ abstract class Application
         return new $controller_class($this);
     }
 
+    /**
+     * @param HttpNotFoundException $e
+     */
     public function render404Page(HttpNotFoundException $e): void
     {
         $this->response->setStatusCode(404, 'Not Found');

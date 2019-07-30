@@ -21,19 +21,19 @@ abstract class Controller
      */
     protected $application;
     /**
-     * @var mixed|Request
+     * @var Request
      */
     protected $request;
     /**
-     * @var mixed|Response
+     * @var Response
      */
     protected $response;
     /**
-     * @var mixed|Session
+     * @var Session
      */
     protected $session;
     /**
-     * @var DbManager|mixed
+     * @var DbManager
      */
     protected $db_manager;
 
@@ -61,7 +61,7 @@ abstract class Controller
      * @throws HttpNotFoundException
      * @throws UnauthorizedActionException
      */
-    public function run(string $action, array $params = [])
+    public function run(string $action, array $params = []): string
     {
         $this->action_name = $action;
 
@@ -74,6 +74,7 @@ abstract class Controller
             throw new UnauthorizedActionException();
         }
 
+        // 可変関数
         $content = $this->$action_method($params);
         return $content;
     }
@@ -118,7 +119,7 @@ abstract class Controller
         $this->response->setHttpHeader('Location', $url);
     }
 
-    protected function generateCsrfToken(string $form_name)
+    protected function generateCsrfToken(string $form_name): string
     {
         $key = 'csrf_tokens/' . $form_name;
         $tokens = $this->session->get($key, []);
@@ -132,7 +133,7 @@ abstract class Controller
         return $token;
     }
 
-    protected function checkCsrfToken(string $form_name, $token)
+    protected function checkCsrfToken(string $form_name, ?array $token): bool
     {
         $key = 'csrf_tokens/' . $form_name;
         $tokens = $this->session->get($key, []);
@@ -150,7 +151,7 @@ abstract class Controller
      * @param $tokens
      * @return mixed
      */
-    private function deleteOldTokens($tokens)
+    private function deleteOldTokens(?array $tokens): ?array
     {
         if (count($tokens) >= 10) {
             return array_shift($tokens);
@@ -158,9 +159,10 @@ abstract class Controller
         return $tokens;
     }
 
-    protected function needsAuthentication($action)
+    protected function needsAuthentication($action): bool
     {
-        if ($this->auth_actions === true || (is_array($this->auth_actions)) && in_array($action, $this->auth_actions)) {
+        if ($this->auth_actions === true ||
+            (is_array($this->auth_actions)) && in_array($action, $this->auth_actions)) {
             return true;
         }
         return false;

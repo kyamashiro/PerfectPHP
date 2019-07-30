@@ -47,6 +47,7 @@ class DbRepository
     }
 
     /**
+     * PDO::FETCH_ASSOCは取得結果を連想配列で受け取る
      * @param string $sql 'INSERT INTO user (name) VALUES (:name)'
      * @param array $params
      * @return mixed

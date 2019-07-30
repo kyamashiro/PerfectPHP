@@ -24,7 +24,7 @@ class View
     /**
      * View constructor.
      * @param string $base_dir viewsディレクトリへの絶対パス
-     * @param $defaults
+     * @param array viewファイルへ渡す変数をセットする
      */
     public function __construct(string $base_dir, array $defaults)
     {
@@ -36,7 +36,7 @@ class View
      * @param string $name
      * @param $value
      */
-    public function setLayoutVar(string $name, $value)
+    public function setLayoutVar(string $name, $value): void
     {
         $this->layout_variables[$name] = $value;
     }
@@ -48,7 +48,7 @@ class View
      * @param bool $_layout
      * @return false|string
      */
-    public function render(string $_path, array $_variables, bool $_layout = false)
+    public function render(string $_path, array $_variables, bool $_layout = false): string
     {
         $_file = "{$this->base_dir}/{$_path}.php";
         extract(array_merge($this->defaults, $_variables));
