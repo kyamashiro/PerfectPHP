@@ -8,7 +8,7 @@ try {
         PDO::ATTR_EMULATE_PREPARES => false
     ];
     //charset utf-8のようにハイフンはいらない
-    $pdo = new PDO('mysql:host=localhost;dbname=online_bbs;charset=utf8', 'root', 'password', $opt);
+    $pdo = new PDO('mysql:host=mysql;dbname=online_bbs;charset=utf8mb4', 'root', 'password', $opt);
 } catch (PDOException $e) {
     exit($e->getMessage());
 }

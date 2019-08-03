@@ -61,7 +61,7 @@ abstract class Controller
      * @throws HttpNotFoundException
      * @throws UnauthorizedActionException
      */
-    public function run(string $action, array $params = []): string
+    public function run(string $action, array $params = []): ?string
     {
         $this->action_name = $action;
 
@@ -123,7 +123,10 @@ abstract class Controller
     {
         $key = 'csrf_tokens/' . $form_name;
         $tokens = $this->session->get($key, []);
-        $tokens = $this->deleteOldTokens($tokens);
+
+        if (count($tokens) >= 10) {
+            return array_shift($tokens);
+        }
 
         $token = sha1($form_name . session_id() . microtime());
         $tokens[] = $token;
@@ -133,7 +136,7 @@ abstract class Controller
         return $token;
     }
 
-    protected function checkCsrfToken(string $form_name, ?array $token): bool
+    protected function checkCsrfToken(string $form_name, $token): bool
     {
         $key = 'csrf_tokens/' . $form_name;
         $tokens = $this->session->get($key, []);
@@ -145,18 +148,6 @@ abstract class Controller
         }
 
         return false;
-    }
-
-    /**
-     * @param $tokens
-     * @return mixed
-     */
-    private function deleteOldTokens(?array $tokens): ?array
-    {
-        if (count($tokens) >= 10) {
-            return array_shift($tokens);
-        }
-        return $tokens;
     }
 
     protected function needsAuthentication($action): bool

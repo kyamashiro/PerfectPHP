@@ -52,7 +52,7 @@ class DbRepository
      * @param array $params
      * @return mixed
      */
-    public function fetch(string $sql, $params = [])
+    public function fetch(string $sql, $params = []): array
     {
         return $this->execute($sql, $params)->fetch(PDO::FETCH_ASSOC);
     }

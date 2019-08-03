@@ -45,10 +45,10 @@ class View
      * extractで変数展開時に変数の衝突を防ぐため､引数の接頭辞にアンダースコアをつける
      * @param string $_path
      * @param array $_variables
-     * @param bool $_layout
+     * @param string|bool $_layout
      * @return false|string
      */
-    public function render(string $_path, array $_variables, bool $_layout = false): string
+    public function render(string $_path, array $_variables, $_layout = false): string
     {
         $_file = "{$this->base_dir}/{$_path}.php";
         extract(array_merge($this->defaults, $_variables));
@@ -61,9 +61,11 @@ class View
 
         if ($_layout) {
             $content = $this->render(
-                $_layout, array_merge($this->layout_variables, ['_content' => $content])
-            );
+                $_layout,
+                array_merge($this->layout_variables, ['_content' => $content]),
+                );
         }
+
         return $content;
     }
 

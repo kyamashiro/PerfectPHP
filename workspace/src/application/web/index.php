@@ -8,6 +8,7 @@
 
 // フロントコントローラ
 require '../bootstrap.php';
+require '../MiniBlogApplication.php';
 
-$request = new Request();
-echo $request->getRequestUri();
+$request = new MiniBlogApplication(false);
+echo $request->run();

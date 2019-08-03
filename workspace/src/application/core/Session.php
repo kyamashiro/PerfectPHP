@@ -37,7 +37,7 @@ class Session
     /**
      * @param string $name
      * @param array $default
-     * @return null
+     * @return mixed
      */
     public function get(string $name, array $default = null)
     {
@@ -86,7 +86,7 @@ class Session
     /**
      * ログイン状態か判定する
      * $_Session['_authenticated']というキーがtrueならログイン状態
-     * @return null
+     * @return mixed
      */
     public function isAuthenticated()
     {
