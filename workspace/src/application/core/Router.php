@@ -39,9 +39,9 @@ class Router
             //URLをスラッシュごとに分割する
             $tokens = explode('/', ltrim($url, '/'));
             foreach ($tokens as $i => $token) {
-                if (strpos($token, ':')) {
-                    $name = substr($token, 1);
-                    $token = "?P<{$name}>[^/]+";
+                if (0 === mb_strpos($token, ':')) {
+                    $name = mb_substr($token, 1);
+                    $token = "(?P<{$name}>[^/]+)";
                 }
                 $tokens[$i] = $token;
             }
@@ -57,7 +57,7 @@ class Router
      */
     public function resolve($path_info)
     {
-        if (substr($path_info, 0, 1) !== '/') {
+        if (mb_substr($path_info, 0, 1) !== '/') {
             $path_info = "/{$path_info}";
         }
 

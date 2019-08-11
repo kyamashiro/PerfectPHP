@@ -39,7 +39,7 @@ class Session
      * @param array $default
      * @return mixed
      */
-    public function get(string $name, array $default = null)
+    public function get(string $name, $default = null)
     {
         if (isset($_SESSION[$name])) {
             return $_SESSION[$name];

@@ -20,7 +20,7 @@ class UserRepository extends DbRepository
         return sha1($password . 'SecretKey');
     }
 
-    public function fetchByUserName(string $user_name): array
+    public function fetchByUserName(string $user_name)
     {
         $sql = 'SELECT * FROM users WHERE user_name = :user_name';
 
@@ -36,5 +36,12 @@ class UserRepository extends DbRepository
         }
 
         return false;
+    }
+
+    public function fetchAllFollowingsByUserId(int $user_id)
+    {
+        $sql = 'SELECT u.* FROM users AS u LEFT JOIN followings AS f ON f.following_id = u.id WHERE f.user_id = :user_id';
+
+        return $this->fetchAll($sql, [':user_id' => $user_id]);
     }
 }
